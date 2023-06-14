@@ -17,7 +17,22 @@ To answer five of the following eight questions:
 
 # Data Dictionary
 
+Column Name | Description | Key
+--- | --- | --- 
+date | Date that the path in the entry was accessed | datetime64
+time | Time within date that the path in the entry was accessed | datetime64
+path | Filepath within Codeup website that the user visited | string
+user_id | Numeric ID of given user | int
+cohort_id | Numeric ID of given cohort | int
+ip | IP address of user | string
+name | Name of cohort | string
+start_date | Start date of cohort | datetime64
+end_date | End date of cohort | datetime64
+program_id | ID of program | 1 = , 2 = , 3 = Data Science, 4 = ?
+
 # Steps to Reproduce
+
+Run through the notebook using your own credentials for acquiring the data from the Codeup SQL database.
 
 # Initial Hypotheses
 
@@ -25,7 +40,18 @@ To answer five of the following eight questions:
 
 # Acquire
 
+- Acquire dataset from Codeup SQL database
+- Save data as a local .csv file
+
 # Prepare
+
+- Remove duplicate columns (id)
+- Remove unnecessary columns (created_at, updated_at, deleted_at)
+- Remove confounding columns (slack)
+- Concatenate date and time
+- Convert date, time, start_date, and end_date to datatype datetime64
+- Set datetime to index
+- Convert cohort_id to datatype integer
 
 # Explore
 
