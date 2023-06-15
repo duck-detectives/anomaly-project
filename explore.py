@@ -107,24 +107,30 @@ def lessons_after_grad(logs, program_id):
 def least_accessed_ds(df):
     '''
     Input: df
+    Action: creates new df, gets lessons from created file1 column, iterates over each lesson to get
+    count of all lessons and returns the least number of lessons.
     Output: Bottom five least access lessons 
     '''
-    
+    # makes new df
     df1 = df.copy()
+    # creates new columns
     df1[['folder', 'file1', 'file2']] = df1['path'].str.split('/', 2, expand=True)
+    # isolates each lesson
     lessons = df1 [df1.file1.notnull()]
+    # gets lesson counts
     lesson_counts = lessons.folder.value_counts()
+    # creates df for ds students
     ds = lessons[(lessons.program_id == 3)].folder.value_counts()
-    
+    # dictionary for lesson counts
     combined_counts3 = {}
-    
+    # for loop to iterate over each lesson to count
     for lesson, count in ds.items():
         lesson_name = lesson.split('-')[-1]
         if lesson_name in combined_counts3:
             combined_counts3[lesson_name] += count
         else:
             combined_counts3[lesson_name] = count
-    
+    # sorting lessons from least to greatest lesson count
     least_accessed_lessons = sorted(combined_counts3.items(), key=lambda x: x[1])
     
     print("Lessons accessed the least:")
@@ -137,24 +143,30 @@ def least_accessed_ds(df):
 def least_accessed_web_dev(df):
     '''
     Input: df
+    Action: creates new df, gets lessons from created file1 column, iterates over each lesson to get
+    count of all lessons and returns the least number of lessons.
     Output: least access lessons 
     '''
-    
+    # makes new df
     df1 = df.copy()
+    # creates new columns
     df1[['folder', 'file1', 'file2']] = df1['path'].str.split('/', 2, expand=True)
+    # isolates each lesson
     lessons = df1 [df1.file1.notnull()]
+    # gets lesson counts
     lesson_counts = lessons.folder.value_counts()
+    # creates df for web dev students
     web_dev = lessons[(lessons.program_id == 1) | (lessons.program_id == 2)].folder.value_counts().head(60)
-    
+    # dictionary for lesson counts
     combined_counts2 = {}
-    
+    # for loop to iterate over each lesson to count
     for lesson, count in web_dev.items():
         lesson_name = lesson.split('-')[-1]
         if lesson_name in combined_counts2:
             combined_counts2[lesson_name] += count
         else:
             combined_counts2[lesson_name] = count
-    
+    # sorting lessons from least to greatest lesson count
     least_accessed_lessons = sorted(combined_counts2.items(), key=lambda x: x[1])
     
     print("Lessons accessed the least:")
