@@ -13,7 +13,8 @@ from random import randint
 from matplotlib import style
 import seaborn as sns
 from sqlalchemy import text, create_engine
-
+import env
+import os
 
 
 
@@ -31,6 +32,32 @@ def acquire_logs(user=env.username, password=env.password, host=env.host):
     '''
     df = pd.read_sql(query, url)
     return df
+
+
+def get_logs_data(filename="logs.csv"):
+    """
+    This function will:
+    - Check local directory for csv file
+        - return if exists
+    - If csv doesn't exists:
+        - create a df of the SQL_query
+        - write df to csv
+    - Output logs df
+    """
+    if os.path.exists(filename):
+        df = pd.read_csv(filename) 
+        print('Found CSV')
+        return df
+    
+    else:
+        df = acquire_logs()
+        
+        #want to save to csv
+        df.to_csv(filename)
+        print('Creating CSV')
+        return df
+
+
 
 
 
