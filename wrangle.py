@@ -45,7 +45,7 @@ def get_logs_data(filename="logs.csv"):
     - Output logs df
     """
     if os.path.exists(filename):
-        df = pd.read_csv(filename) 
+        df = pd.read_csv(filename, index_col=0) 
         print('Found CSV')
         return df
     
@@ -77,6 +77,8 @@ def prep_logs(df):
     df = df[(df.path != '/')
         & (df.path != 'toc')
         & (df.path != 'search/search_index.json')]
+    df = df[df.program_id != 4]
+    df = df[df.name != 'Staff']
     return df
 
 

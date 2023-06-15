@@ -28,7 +28,7 @@ ip | IP address of user | string
 name | Name of cohort | string
 start_date | Start date of cohort | datetime64
 end_date | End date of cohort | datetime64
-program_id | ID of program | 1 = , 2 = , 3 = Data Science, 4 = ?
+program_id | ID of program | 1 = Web Dev, 2 = Web Dev, 3 = Data Science
 
 # Steps to Reproduce
 
@@ -36,28 +36,43 @@ Run through the notebook using your own credentials for acquiring the data from 
 
 # Initial Hypotheses
 
+Web Development students will have more hits overall to filepaths than Data Science students.
+
+Students overall access the curriculum more often during their tenure at Codeup than after their graduation.
+
 # Project Planning 
 
 # Acquire
 
 - Acquire dataset from Codeup SQL database
 - Save data as a local .csv file
+- Initial data frame contains 847,330 rows and 15 columns
 
 # Prepare
 
-- Remove duplicate columns (id)
-- Remove unnecessary columns (created_at, updated_at, deleted_at)
-- Remove confounding columns (slack)
-- Concatenate date and time
-- Convert date, time, start_date, and end_date to datatype datetime64
-- Set datetime to index
-- Convert cohort_id to datatype integer
+- Dropped columns not needed
+    - id, slack, created at, updated at, deleted at
+- Set index to date_time
+    - dropped initial date and time columns after they were combined to date_time
+- Updated dtypes for cohort_id (int), start/end dates (datetime64)
+- Dropped rows containing ('/', 'toc', 'search/search_index.json')
+    - These rows are landing pages and not lesson pages
+- Dropped rows where program_id == 4 since there were only 4 entries and therefore not a full-fledged program yet.
+- Dropped rows where name == 'Staff', since we are not interested in the frequency of staff visits to the curriculum.
+- After prep, data frame has 690,916 rows and 8 columns
 
 # Explore
 
+- Addressed each of the 8 questions individually that was asked by our superior. Created visualizations where necessary.
+
 # Conclusion
+
+- Overall, Web Dev students hit the curriculum more often, and even had access to Data Science material. 
+- Data Science cohorts, on the other hand, did not have access to Web Dev material.
+- Web Dev students accessed the same material both during their cohort and after their graduation.
+- Data Science students reviewed MySQL moreso after graduation than during their time at Codeup.
+- At least speaking for Data Science students, the least accessed materials are those that are covered towards the end of the curriculum.
 
 # Recommendations
 
-# Next Steps
-
+- Get together with the Data Engineers in order to clean up the data and remove unnecessary information.
