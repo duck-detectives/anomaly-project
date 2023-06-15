@@ -104,7 +104,7 @@ def lessons_after_grad(logs, program_id):
     logs = logs.drop(columns='path')
 
     return logs[(logs.index > logs.end_date) & (logs.program_id == program_id)]\
-                        .groupby(['main_path', 'sub_path']).count().sort_values('user_id', ascending=False).head(3)
+                        .groupby(['main_path', 'sub_path'])[['user_id']].count().sort_values('user_id', ascending=False).head(3)
 
 ################ QUESTION 7 ####################
 
